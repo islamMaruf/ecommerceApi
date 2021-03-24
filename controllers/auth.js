@@ -16,7 +16,7 @@ const signUp = (req, res) => {
     user.hashed_password = undefined;
     return res.status(200).json({
       user: user,
-      message: "user signup successfully",
+      message: "User signup successfully",
     });
   });
 };
