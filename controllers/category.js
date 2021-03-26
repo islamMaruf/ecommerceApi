@@ -1,6 +1,8 @@
 const Category = require("../models/category");
 const { errorHandler } = require("../helpers/dbErrorHandlers.js");
 
+const list = {};
+
 const create = (req, res) => {
   const category = new Category(req.body);
   category.save((err, data) => {
@@ -16,6 +18,16 @@ const create = (req, res) => {
   });
 };
 
+const show = {};
+
+const update = {};
+
+const remove = {};
+
 module.exports = {
+  list,
   create,
+  show,
+  update,
+  remove,
 };
