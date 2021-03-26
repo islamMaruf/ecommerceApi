@@ -41,7 +41,7 @@ app.use("/api", productRoutes);
 //test route
 app.get("/", (req, res) => {
   return res.status(200).json({
-    message: "this is test route",
+    message: "this is test route. now server running ... ",
   });
 });
 

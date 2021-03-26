@@ -5,7 +5,20 @@ const Product = require("../models/product");
 
 const { errorHandler } = require("../helpers/dbErrorHandlers.js");
 
-const list = {};
+const list = (req, res) => {
+  Product.find()
+    .select("-photo")
+    .exec((err, products) => {
+      if (err) {
+        return res.status(400).json({
+          error: errorHandler(err),
+        });
+      }
+      return res.status(200).json({
+        products: products,
+      });
+    });
+};
 
 const create = (req, res) => {
   let form = new formidable.IncomingForm();
@@ -51,7 +64,7 @@ const show = (req, res) => {
   req.product.photo = undefined;
   return res.json({
     product: req.product,
-    message: "product found",
+    message: "Product found",
   });
 };
 
@@ -89,7 +102,7 @@ const update = (req, res) => {
           error: errorHandler(err),
         });
       }
-      return res.status(201).json({
+      return res.status(200).json({
         message: "Product updated successfully",
         product: data,
       });
@@ -105,7 +118,7 @@ const remove = (req, res) => {
         error: errorHandler(err),
       });
     }
-    return res.status(200).json({
+    return res.status(202).json({
       message: "Product deleted successfully",
     });
   });
