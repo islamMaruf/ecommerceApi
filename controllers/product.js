@@ -6,12 +6,17 @@ const Product = require("../models/product");
 const { errorHandler } = require("../helpers/dbErrorHandlers.js");
 
 const list = (req, res) => {
+  let { order = "asc", sortBy = "_id", limit = 6 } = req.query;
+
   Product.find()
     .select("-photo")
+    .populate("category")
+    .sort([[sortBy, order]])
+    .limit(parseInt(limit))
     .exec((err, products) => {
       if (err) {
         return res.status(400).json({
-          error: errorHandler(err),
+          error: "Products Not found",
         });
       }
       return res.status(200).json({
@@ -48,6 +53,7 @@ const create = (req, res) => {
     }
     product.save((err, data) => {
       if (err) {
+        console.log({ err });
         return res.status(400).json({
           error: errorHandler(err),
         });
@@ -124,10 +130,44 @@ const remove = (req, res) => {
   });
 };
 
+const listRelated = (req, res) => {
+  const { limit = 6 } = req.query;
+  Product.find({ _id: { $ne: req.product }, category: req.product.category })
+    .limit(parseInt(limit))
+    .select("-photo")
+    .populate("category", "_id name")
+    .exec((err, products) => {
+      if (err) {
+        console.log({ err });
+        return res.status(400).json({
+          error: "Products not found",
+        });
+      }
+      return res.status(200).json({
+        products,
+      });
+    });
+};
+const listCategories = (req, res) => {
+  Product.distinct("category", {}, (err, categories) => {
+    if (err) {
+      console.log({ err });
+      return res.status(400).json({
+        error: "Products not found",
+      });
+    }
+    return res.status(200).json({
+      categories,
+    });
+  });
+};
+
 module.exports = {
   list,
   create,
   show,
   update,
   remove,
+  listRelated,
+  listCategories,
 };

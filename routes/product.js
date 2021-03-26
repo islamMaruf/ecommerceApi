@@ -7,7 +7,10 @@ const {
   update,
   remove,
   list,
+  listRelated,
+  listCategories,
 } = require("../controllers/product");
+
 const { userById, isAuth, isAdmin } = require("../middleware/user");
 const { productById } = require("../middleware/product");
 const { requireJWT } = require("../middleware/auth");
@@ -23,6 +26,8 @@ router.delete(
   remove
 );
 router.put("/product/:productId/:userId", requireJWT, isAuth, isAdmin, update);
+router.get("/products/related/:productId", listRelated);
+router.get("/products/categories", listCategories);
 
 router.param("userId", userById);
 router.param("productId", productById);
