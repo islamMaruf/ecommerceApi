@@ -3,9 +3,7 @@ const { errorHandler } = require("../helpers/dbErrorHandlers");
 const { generateJsonToken } = require("../services/jsonToken");
 
 const signUp = (req, res) => {
-  const { body } = req;
-  console.log({ body });
-  const user = new User(body);
+  const user = new User(req.body);
   user.save((err, user) => {
     if (err) {
       return res.status(400).json({

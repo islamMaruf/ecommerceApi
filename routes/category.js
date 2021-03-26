@@ -15,19 +15,19 @@ const { requireJWT } = require("../middleware/auth");
 router.get("/categories", list);
 router.post("/create/category/:userId", requireJWT, isAuth, isAdmin, create);
 router.get("/category/:categoryId", show);
-router.delete(
-  "/category/:categoryId/:userId",
-  requireJWT,
-  isAuth,
-  isAdmin,
-  remove
-);
 router.put(
   "/category/:categoryId/:userId",
   requireJWT,
   isAuth,
   isAdmin,
   update
+);
+router.delete(
+  "/category/:categoryId/:userId",
+  requireJWT,
+  isAuth,
+  isAdmin,
+  remove
 );
 
 router.param("categoryId", categoryById);

@@ -53,7 +53,6 @@ const create = (req, res) => {
     }
     product.save((err, data) => {
       if (err) {
-        console.log({ err });
         return res.status(400).json({
           error: errorHandler(err),
         });
@@ -79,7 +78,6 @@ const update = (req, res) => {
   form.keepExtensions = true;
   form.parse(req, (err, fields, files) => {
     if (err) {
-      console.log({ err });
       return res.status(400).json({
         error: "Image could not be uploaded",
       });
@@ -138,7 +136,6 @@ const listRelated = (req, res) => {
     .populate("category", "_id name")
     .exec((err, products) => {
       if (err) {
-        console.log({ err });
         return res.status(400).json({
           error: "Products not found",
         });
@@ -151,7 +148,6 @@ const listRelated = (req, res) => {
 const listCategories = (req, res) => {
   Product.distinct("category", {}, (err, categories) => {
     if (err) {
-      console.log({ err });
       return res.status(400).json({
         error: "Products not found",
       });

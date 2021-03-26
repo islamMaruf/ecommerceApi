@@ -13,7 +13,7 @@ const {
 } = require("../controllers/product");
 
 const { userById, isAuth, isAdmin } = require("../middleware/user");
-const { productById } = require("../middleware/product");
+const { productById, photo } = require("../middleware/product");
 const { requireJWT } = require("../middleware/auth");
 
 router.get("/products", list);
@@ -30,6 +30,7 @@ router.put("/product/:productId/:userId", requireJWT, isAuth, isAdmin, update);
 router.get("/products/related/:productId", listRelated);
 router.get("/products/categories", listCategories);
 router.post("/products/search", listBySearch);
+router.get("/products/photo/:productId", photo);
 
 router.param("userId", userById);
 router.param("productId", productById);
