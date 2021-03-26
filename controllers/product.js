@@ -17,7 +17,7 @@ const create = (req, res) => {
       });
     }
     const { name, description, price, category, quantity, shipping } = fields;
-    if (!name || !description || !price || !category || quantity || shipping) {
+    if (!name || !description || !price || !category || !quantity) {
       return res.status(400).json({
         err: "All fields are required",
       });
@@ -47,7 +47,13 @@ const create = (req, res) => {
   });
 };
 
-const show = {};
+const show = (req, res) => {
+  req.product.photo = undefined;
+  return res.json({
+    product: req.product,
+    message: "product found",
+  });
+};
 
 const update = {};
 
