@@ -9,6 +9,7 @@ const {
   list,
   listRelated,
   listCategories,
+  listBySearch,
 } = require("../controllers/product");
 
 const { userById, isAuth, isAdmin } = require("../middleware/user");
@@ -28,6 +29,7 @@ router.delete(
 router.put("/product/:productId/:userId", requireJWT, isAuth, isAdmin, update);
 router.get("/products/related/:productId", listRelated);
 router.get("/products/categories", listCategories);
+router.post("/products/search", listBySearch);
 
 router.param("userId", userById);
 router.param("productId", productById);
